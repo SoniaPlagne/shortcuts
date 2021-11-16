@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, ScrollView } from "react-native";
+import { View, Text, Button, ScrollView, StyleSheet } from "react-native";
 import {Picker} from '@react-native-picker/picker';
 import ShortcutScreen from "./ShortcutScreen";
 
@@ -24,7 +24,7 @@ export default function CategoryScreen(props) {
 
 
   const shortcutsJsx = shortcuts.map((s) => (
-    <View key={s.id}>
+    <View key={s.id} style={styles.container2}>
       <Text>
         {s.title}
       </Text>
@@ -50,6 +50,9 @@ export default function CategoryScreen(props) {
   
   return (
     <ScrollView>
+      <Text style={styles.title}>
+        Rechercher par catégorie :
+      </Text>
       <Picker
         selectedValue={selectedCategory}
         style={{ backgroundColor: "#ffbe9f", margin: 15}}
@@ -71,3 +74,25 @@ export default function CategoryScreen(props) {
     </ScrollView>
   )
 }
+
+
+
+
+
+
+
+const styles = StyleSheet.create({
+  title: {  
+    margin: 10,
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  
+  container2: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: 30,
+  },
+
+})

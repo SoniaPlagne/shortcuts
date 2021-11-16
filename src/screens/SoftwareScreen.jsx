@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, ScrollView, Text, View } from "react-native";
+import { Button, ScrollView, Text, View, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 
@@ -21,7 +21,7 @@ export default function SoftwareScreen(props) {
     .map((s) => <Picker.Item key={s.id} label={s.name} value={s.id} />);
 
   const shortcutsJsx = shortcuts.map((s) => (
-    <View key={s.id}>
+    <View key={s.id} style={styles.container2}>
       <Text>
         {s.title}
       </Text>
@@ -30,6 +30,9 @@ export default function SoftwareScreen(props) {
 
   return (
     <ScrollView>
+      <Text style={styles.title}>
+        Rechercher par logiciel :
+      </Text>
       <Picker
         selectedValue={selectedSoftware}
         style={{ backgroundColor: "#ffbe9f", margin: 15 }}
@@ -51,3 +54,22 @@ export default function SoftwareScreen(props) {
     </ScrollView>
   )
 }
+
+
+
+const styles = StyleSheet.create({
+  title: {  
+    margin: 10,
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+
+  container2: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: 30,
+  },
+
+
+})

@@ -35,7 +35,7 @@ export default function HomeScreen(props) {
       </View>
 
       <View style= {styles.shortcut}>
-        <Text style={styles.title}>Ou bien:</Text>
+        <Text style={styles.title}>Ou bien :</Text>
         <TouchableOpacity
             title="Ajouter un raccourci"
             onPress={() => props.navigation.navigate("Shortcut")}
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     marginTop: 50,
-    // justifyContent: "space-around"
   },
 
   head:{
@@ -71,6 +70,8 @@ const styles = StyleSheet.create({
   title: {  
     margin: 10,
     textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 
 
@@ -94,7 +95,8 @@ const styles = StyleSheet.create({
 
   btn2:{
     flexBasis: "15%",
-    backgroundColor: "#b4ffc9"
+    backgroundColor: "#b4ffc9",
+    alignContent: "center"
   },
 
   shortcut:{
