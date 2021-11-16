@@ -1,21 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+import HomeScreen from './src/screens/HomeScreen';
+import CategoryScreen from './src/screens/CategoryScreen';
+import SoftwareScreen from './src/screens/SoftwareScreen';
+import ShortcutScreen from './src/screens/ShortcutScreen';
+
+const Stack = createNativeStackNavigator();
+
+export default function App(){
+  return(
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen 
+          name='Home'
+          component={HomeScreen}
+          options={{title:"Bienvenue"}} />
+        <Stack.Screen 
+          name='Category' 
+          component={CategoryScreen}
+          options={{title:"Recherche par catégorie"}} />
+         <Stack.Screen 
+          name='Software' 
+          component={SoftwareScreen}
+          options={{title:"Recherche par logiciel"}} />
+        <Stack.Screen 
+          name='Shortcut' 
+          component={ShortcutScreen}
+          options={{title:"Ajout d'un raccourci"}} />  
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
