@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Button, ScrollView, StyleSheet } from "react-native";
 import {Picker} from '@react-native-picker/picker';
-import ShortcutScreen from "./ShortcutScreen";
 
 
 
@@ -14,7 +13,10 @@ export default function CategoryScreen(props) {
   useEffect(() => {
     fetch(process.env.API_URL + "categories")
       .then((response) => response.json())
-      .then((data) => setCategories(data["hydra:member"]))
+      .then((data) => {
+        setCategories(data["hydra:member"]);
+        refreshList (data["hydra:member"][0].id)
+    })
       .catch((error) => console.log(error));
   }, []);
 
@@ -30,24 +32,16 @@ export default function CategoryScreen(props) {
       </Text>
       
     </View>
-  ))  
+  ))
 
+  function refreshList (c){
+    fetch(process.env.API_URL + "shortcuts?categories.id=" + c)
+      .then((response) => response.json())
+      .then((data) => setShortcuts(data["hydra:member"]))
+      .catch((error) => console.log(error));
 
+  }
 
-
-  // const productsJsx = Details.products.map((p) => (
-  //   <View key={p['@id']} style={styles.productContainer}>
-  //       <Image style={styles.image} source={{uri: getImageUrl(p.image)}} />
-  //       <View style={styles.productDetails}>
-  //           <Text style={styles.productTitle}>{p.name}</Text>
-  //           <Text>{p.price} euros</Text>
-
-  //       </View>
-      
-
-  //   </View>
-  // )
-  
   return (
     <ScrollView>
       <Text style={styles.title}>
@@ -58,11 +52,8 @@ export default function CategoryScreen(props) {
         style={{ backgroundColor: "#ffbe9f", margin: 15}}
         onValueChange={
           function (c){
-            fetch(process.env.API_URL + "shortcuts?categories.id=" + c)
-              .then((response) => response.json())
-              .then((data) => setShortcuts(data["hydra:member"]))
-              .catch((error) => console.log(error));
-          setSelectedCategory(c);
+            refreshList (c)
+            setSelectedCategory(c);
         }}>
 
           {categorieJsx}
@@ -74,10 +65,6 @@ export default function CategoryScreen(props) {
     </ScrollView>
   )
 }
-
-
-
-
 
 
 

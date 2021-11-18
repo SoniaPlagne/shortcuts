@@ -12,7 +12,10 @@ export default function SoftwareScreen(props) {
   useEffect(() => {
     fetch(process.env.API_URL + "software")
       .then((response) => response.json())
-      .then((data) => setSoftware(data["hydra:member"]))
+      .then((data) => {
+        setSoftware(data["hydra:member"]);
+        refreshList (data["hydra:member"][0].id)
+      })
       .catch((error) => console.log(error));
   }, []);
 
@@ -26,8 +29,16 @@ export default function SoftwareScreen(props) {
         {s.title}
       </Text>
     </View>
-  ))  
-
+  )) 
+  
+  
+  function refreshList (s){
+    fetch(process.env.API_URL + "shortcuts?software.id=" + c)
+      .then((response) => response.json())
+      .then((data) => setShortcuts(data["hydra:member"]))
+      .catch((error) => console.log(error));
+  }
+    
   return (
     <ScrollView>
       <Text style={styles.title}>
