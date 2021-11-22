@@ -19,12 +19,31 @@ export default function CategoryScreen(props) {
 
   const categorieJsx = categories
     .sort((c1, c2) => c1.name.localeCompare(c2.name))
-    .map((c) => <Picker.Item key={c.id} label={c.name} value={c.id} />);
+    .map((c) => 
+      <Picker.Item 
+        key={c.id} 
+        label={c.name} 
+        value={c.id} 
+      />);
 
-  const shortcutsJsx = shortcuts.map((s) => (
-    <View key={s.id} style={styles.container2}>
-      <Text>{s.title}</Text>
-    </View>
+  const shortcutsJsx = shortcuts.map((c) => (
+    <View key={c.id} style={styles.container}>
+      <Text style={styles.picker}>
+        {c.title}
+      </Text>
+      <Text style={styles.label1}>
+        {c.software.name}
+      </Text>
+      <View>
+        {c.categories.map((c) => (
+          <Text
+            key={c.id}
+            style={styles.label2}>
+          {c.name}
+          </Text>
+        ))}
+      </View>
+    </View> 
   ));
 
   function refreshList(c) {
@@ -47,8 +66,11 @@ export default function CategoryScreen(props) {
       >
         {categorieJsx}
       </Picker>
-
-      {shortcutsJsx}
+      <View style={styles.container2} >
+        {shortcutsJsx}
+      </View>  
+        
+    
     </ScrollView>
   );
 }
@@ -61,9 +83,39 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  container2: {
-    flex: 1,
+  container: {
     alignItems: "center",
+    textAlign: "center",
     marginTop: 30,
+    borderStyle: "solid medium",
+    borderColor: "black",
+    borderWidth: 2,
+    width: 300,
+  },
+
+  picker:{
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+
+  container2:{
+    alignItems: "center",
+
+  },
+
+  label1:{
+    backgroundColor: "#91B7F2",
+    borderRadius: 5,
+    padding: 5,
+    width: 250,
+    marginBottom: 20,
+  },
+
+  label2:{
+    backgroundColor: "#EBE8AD",
+    borderRadius: 5,
+    padding: 5,
+    width: 250,
+    marginBottom: 10,
   },
 });
