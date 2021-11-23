@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, ScrollView, Text, View, StyleSheet } from "react-native";
+import { Button, ScrollView, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 export default function SoftwareScreen(props) {
@@ -21,22 +21,34 @@ export default function SoftwareScreen(props) {
     .sort((s1, s2) => s1.name.localeCompare(s2.name))
     .map((s) => <Picker.Item key={s.id} label={s.name} value={s.id} />);
 
-  const shortcutsJsx = shortcuts.map((s) => (
-    <View key={s.id} style={styles.container}>
-      <Text style={styles.picker}>
-        {s.title}
-      </Text>
-      <Text style={styles.label1}>
-        {s.software.name}
-      </Text>
-      <View>
-        {s.categories.map((s) => (
-          <Text key={s.id} style={styles.label2}>
-            {s.name}
-          </Text>
-        ))}
-      </View>
-    </View>
+  const shortcutsJsx = shortcuts.map((shortcut) => (
+
+    <TouchableOpacity
+      title="Details"
+      key={shortcut.id}
+      onPress={() => props.navigation.navigate("Details", {shortcut: shortcut})}
+      >
+
+        <View key={shortcut.id} style={styles.container}>
+            <Text style={styles.picker}>
+                {shortcut.title}
+            </Text>
+
+            <View>
+              <Text style={styles.label1}>
+                {shortcut.software.name}
+              </Text>
+              <View>
+                {shortcut.categories.map((s) => (
+                  <Text key={s.id} style={styles.label2}>
+                  {s.name}
+                  </Text>
+                ))}
+              </View>
+            </View>
+        </View>
+      </TouchableOpacity>
+    
   ));
 
   function refreshList(s) {

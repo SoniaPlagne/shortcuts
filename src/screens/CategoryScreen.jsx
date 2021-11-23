@@ -33,10 +33,14 @@ export default function CategoryScreen(props) {
       onPress={() => props.navigation.navigate("Details", { shortcut: shortcut })}
     >
       <View style={styles.container}>
-        <Text style={styles.picker}>{shortcut.title}</Text>
+        <Text style={styles.picker}>
+          {shortcut.title}
+        </Text>
 
         <View>
-          <Text style={styles.label1}>{shortcut.software.name}</Text>
+          <Text style={styles.label1}>
+            {shortcut.software.name}
+          </Text>
 
           <View>
             {shortcut.categories.map((c) => (
