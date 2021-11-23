@@ -23,8 +23,12 @@ export default function SoftwareScreen(props) {
 
   const shortcutsJsx = shortcuts.map((s) => (
     <View key={s.id} style={styles.container}>
-      <Text style={styles.picker}>{s.title}</Text>
-      <Text style={styles.label1}>{s.software.name}</Text>
+      <Text style={styles.picker}>
+        {s.title}
+      </Text>
+      <Text style={styles.label1}>
+        {s.software.name}
+      </Text>
       <View>
         {s.categories.map((s) => (
           <Text key={s.id} style={styles.label2}>
@@ -44,7 +48,9 @@ export default function SoftwareScreen(props) {
 
   return (
     <ScrollView>
-      <Text style={styles.title}>Rechercher par logiciel :</Text>
+      <Text style={styles.title}>
+        Rechercher par logiciel :
+      </Text>
       <Picker
         selectedValue={selectedSoftware}
         style={{ backgroundColor: "#ffbe9f", margin: 15 }}

@@ -6,6 +6,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import CategoryScreen from './src/screens/CategoryScreen';
 import SoftwareScreen from './src/screens/SoftwareScreen';
 import ShortcutScreen from './src/screens/ShortcutScreen';
+import DetailsScreen from './src/screens/DetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,10 @@ export default function App(){
           name='Shortcut' 
           component={ShortcutScreen}
           options={{title:"Ajout d'un raccourci"}} />  
+        <Stack.Screen
+          name='Details'
+          component={DetailsScreen}
+          options={{title:"Détails du raccourci"}} />  
       </Stack.Navigator>
     </NavigationContainer>
   );

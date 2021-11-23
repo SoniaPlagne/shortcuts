@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 export default function CategoryScreen(props) {
@@ -7,6 +7,8 @@ export default function CategoryScreen(props) {
   const [selectedCategory, setSelectedCategory] = useState();
   const [shortcuts, setShortcuts] = useState([]);
 
+  // HOOK UseEffect « effets de bord » même rôle que Component did mount mais via API avec accès au props et à son état
+  // Requête fetch pour aller chercher des infos dans l'API, then (promsesse) puis reponse
   useEffect(() => {
     fetch(process.env.API_URL + "categories")
       .then((response) => response.json())
@@ -19,31 +21,33 @@ export default function CategoryScreen(props) {
 
   const categorieJsx = categories
     .sort((c1, c2) => c1.name.localeCompare(c2.name))
-    .map((c) => 
-      <Picker.Item 
-        key={c.id} 
-        label={c.name} 
-        value={c.id} 
-      />);
+    .map((c) => <Picker.Item key={c.id} label={c.name} value={c.id} />);
+    //La méthode map()passe sur chaque élément du tableau et lui applique une fonction, 
+    // puis renvoie un nouveau tableau contenant les résultats de cette fonction appliquée sur chaque élément.
 
-  const shortcutsJsx = shortcuts.map((c) => (
-    <View key={c.id} style={styles.container}>
-      <Text style={styles.picker}>
-        {c.title}
-      </Text>
-      <Text style={styles.label1}>
-        {c.software.name}
-      </Text>
-      <View>
-        {c.categories.map((c) => (
-          <Text
-            key={c.id}
-            style={styles.label2}>
-          {c.name}
-          </Text>
-        ))}
+  const shortcutsJsx = shortcuts.map((shortcut) => (
+    <TouchableOpacity
+      // pour que le contenenr des raccourcis soit cliquable vers la page Details
+      title="Details"
+      key={shortcut.id}
+      onPress={() => props.navigation.navigate("Details", { shortcut: shortcut })}
+    >
+      <View style={styles.container}>
+        <Text style={styles.picker}>{shortcut.title}</Text>
+
+        <View>
+          <Text style={styles.label1}>{shortcut.software.name}</Text>
+
+          <View>
+            {shortcut.categories.map((c) => (
+              <Text key={c.id} style={styles.label2}>
+                {c.name}
+              </Text>
+            ))}
+          </View>
+        </View>
       </View>
-    </View> 
+    </TouchableOpacity>
   ));
 
   function refreshList(c) {
@@ -66,11 +70,7 @@ export default function CategoryScreen(props) {
       >
         {categorieJsx}
       </Picker>
-      <View style={styles.container2} >
-        {shortcutsJsx}
-      </View>  
-        
-    
+      <View style={styles.container2}>{shortcutsJsx}</View>
     </ScrollView>
   );
 }
@@ -93,17 +93,16 @@ const styles = StyleSheet.create({
     width: 300,
   },
 
-  picker:{
+  picker: {
     fontWeight: "bold",
     marginBottom: 5,
   },
 
-  container2:{
+  container2: {
     alignItems: "center",
-
   },
 
-  label1:{
+  label1: {
     backgroundColor: "#91B7F2",
     borderRadius: 5,
     padding: 5,
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
-  label2:{
+  label2: {
     backgroundColor: "#EBE8AD",
     borderRadius: 5,
     padding: 5,
